@@ -32,6 +32,9 @@ let CharacterController = class CharacterController {
         await this.locationService.findOne(locationId);
         return this.characterService.addFavoriteLocation(id, locationId);
     }
+    calculateTaxes(id) {
+        return this.characterService.calculateTaxes(id);
+    }
 };
 exports.CharacterController = CharacterController;
 __decorate([
@@ -49,6 +52,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
 ], CharacterController.prototype, "addFavorite", null);
+__decorate([
+    (0, common_1.Get)(':id/taxes'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], CharacterController.prototype, "calculateTaxes", null);
 exports.CharacterController = CharacterController = __decorate([
     (0, common_1.Controller)('character'),
     (0, common_1.UseGuards)(token_auth_guard_1.TokenAuthGuard),

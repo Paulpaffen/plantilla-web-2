@@ -40,4 +40,26 @@ export class CharacterService {
     character.favPlaces.push({ id: locationId } as any);
     return await this.characterRepository.save(character);
   }
+
+  async calculateTaxes(characterId: number): Promise<{ taxDebt: number }> {
+    const character = await this.characterRepository.findOne({
+      where: { id: characterId },
+      relations: ['property'],
+    });
+
+    if (!character) {
+      throw new Error(`El personaje con ID ${characterId} no existe`);
+    }
+
+    // Si no tiene propiedad, retornar 0
+    if (!character.property) {
+      return { taxDebt: 0 };
+    }
+
+    // Calcular impuestos según la fórmula
+    const COEF = character.employee ? 0.08 : 0.03;
+    const taxDebt = Number(character.property.cost) * (1 + COEF);
+
+    return { taxDebt: Number(taxDebt.toFixed(2)) };
+  }
 }

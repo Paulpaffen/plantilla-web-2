@@ -6,4 +6,7 @@ export declare class CharacterService {
     constructor(characterRepository: Repository<Character>);
     create(createCharacterDto: CreateCharacterDto): Promise<Character>;
     addFavoriteLocation(characterId: number, locationId: number): Promise<Character>;
+    calculateTaxes(characterId: number): Promise<{
+        taxDebt: number;
+    }>;
 }

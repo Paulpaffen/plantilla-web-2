@@ -7,4 +7,7 @@ export declare class CharacterController {
     constructor(characterService: CharacterService, locationService: LocationService);
     create(createCharacterDto: CreateCharacterDto): Promise<import("../entities/character.entity").Character>;
     addFavorite(id: number, locationId: number): Promise<import("../entities/character.entity").Character>;
+    calculateTaxes(id: number): Promise<{
+        taxDebt: number;
+    }>;
 }

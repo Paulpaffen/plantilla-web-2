@@ -1,4 +1,4 @@
-import { Controller, Post, Patch, Body, Param, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { Controller, Post, Patch, Get, Body, Param, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { TokenAuthGuard } from '../guards/token-auth.guard';
 import { CreateCharacterDto } from './dto/create-character.dto';
@@ -26,5 +26,10 @@ export class CharacterController {
     await this.locationService.findOne(locationId);
     
     return this.characterService.addFavoriteLocation(id, locationId);
+  }
+
+  @Get(':id/taxes')
+  calculateTaxes(@Param('id', ParseIntPipe) id: number) {
+    return this.characterService.calculateTaxes(id);
   }
 }

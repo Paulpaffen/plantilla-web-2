@@ -44,6 +44,21 @@ let CharacterService = class CharacterService {
         character.favPlaces.push({ id: locationId });
         return await this.characterRepository.save(character);
     }
+    async calculateTaxes(characterId) {
+        const character = await this.characterRepository.findOne({
+            where: { id: characterId },
+            relations: ['property'],
+        });
+        if (!character) {
+            throw new Error(`El personaje con ID ${characterId} no existe`);
+        }
+        if (!character.property) {
+            return { taxDebt: 0 };
+        }
+        const COEF = character.employee ? 0.08 : 0.03;
+        const taxDebt = Number(character.property.cost) * (1 + COEF);
+        return { taxDebt: Number(taxDebt.toFixed(2)) };
+    }
 };
 exports.CharacterService = CharacterService;
 exports.CharacterService = CharacterService = __decorate([
